@@ -7,3 +7,4 @@ _shots/
 .vercel
 .env*
 .wrangler/
+WORKLOG.md
