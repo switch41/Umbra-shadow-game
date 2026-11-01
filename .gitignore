@@ -2,3 +2,4 @@ node_modules/
 dist/
 _*.log
 _*.png
+_shots/
