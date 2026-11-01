@@ -1,3 +1,5 @@
+import { loadBest } from './store.js';
+
 const fmtTime = (s) => {
   const m = Math.floor(s / 60);
   const r = Math.floor(s % 60);
@@ -23,6 +25,7 @@ export class Hud {
 
   setLevel(level) {
     this.levelEl.textContent = `${level.id} · ${level.name}`;
+    this._best = loadBest(level.id);
     this._timeStr = '';
     this.setTime(0);
     this.setTurns(0, level.par.turns);
@@ -52,9 +55,9 @@ export class Hud {
     const t = this._timeStr || '0:00';
     const turns = this._turns ?? 0;
     const par = this._par;
-    this.statsEl.textContent = par
-      ? `${t} · turns ${turns}/${par}`
-      : `${t} · turns ${turns}`;
+    let s = par ? `${t} · turns ${turns}/${par}` : `${t} · turns ${turns}`;
+    if (this._best) s += ` · best ${fmtTime(this._best.time)}`;
+    this.statsEl.textContent = s;
   }
 
   hint(lines, ttl = 4) {
@@ -102,15 +105,21 @@ export class Hud {
     this._show({ title: 'Umbra', sub: 'the light gathers…' });
   }
 
-  complete({ name, time, turns, par }) {
+  complete({ name, time, turns, par, best = null, isBest = false }) {
     const bt = `${fmtTime(time)} / par ${fmtTime(par.time)}`;
     const okT = time <= par.time;
     const bt2 = `${turns} / par ${par.turns}`;
     const okU = turns <= par.turns;
+    let stats = `TIME  ${bt}${okT ? '  ✓' : ''}\nTURN  ${bt2}${okU ? '  ✓' : ''}`;
+    if (isBest) {
+      stats += '\n\nNEW BEST';
+    } else if (best) {
+      stats += `\n\nBEST  ${fmtTime(best.time)} / ${best.turns} turns`;
+    }
     this._show({
       title: 'Shadow held',
       sub: name,
-      stats: `TIME  ${bt}${okT ? '  ✓' : ''}\nTURN  ${bt2}${okU ? '  ✓' : ''}`,
+      stats,
       key: 'SPACE  →  next',
       ttl: 6,
     });

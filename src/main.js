@@ -10,6 +10,7 @@ import { pathExists, solveLevel, findPath } from './solver.js';
 import { Hud } from './hud.js';
 import { World } from './world.js';
 import { Preview } from './preview.js';
+import { loadBest, saveBest } from './store.js';
 
 const MASK_INTERVAL = 1 / 30;
 const TURN_UNIT = 0.5;
@@ -253,7 +254,16 @@ function win() {
     bot.restarts = 0;
     console.log(`[umbra] AUTO lvl${level.id} PASS t=${timer.toFixed(1)} turns=${turns}`);
   }
-  hud.complete({ name: level.name, time: timer, turns, par: level.par });
+  const prevBest = loadBest(level.id);
+  const isBest = saveBest(level.id, timer, turns);
+  hud.complete({
+    name: level.name,
+    time: timer,
+    turns,
+    par: level.par,
+    best: isBest ? null : prevBest,
+    isBest,
+  });
 }
 
 function advance() {

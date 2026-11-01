@@ -8,9 +8,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "check": "node scripts/check-physics.mjs && node scripts/check-levels.mjs",
+    "check": "node scripts/check-physics.mjs && node scripts/check-levels.mjs && node scripts/check-store.mjs",
     "check:levels": "node scripts/check-levels.mjs",
-    "check:physics": "node scripts/check-physics.mjs"
+    "check:physics": "node scripts/check-physics.mjs",
+    "check:store": "node scripts/check-store.mjs"
   },
   "dependencies": {
     "three": "^0.180.0"
