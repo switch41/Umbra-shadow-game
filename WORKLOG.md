@@ -165,6 +165,8 @@ All times IST (commit timestamps from git log).
   — GLB pipeline `public/models/<name>.glb` is ready for Vi3W exports;
   procedural stand-ins remain the playable fallback; no exports in repo
   yet.
+- **21:58** Session closed — repo current at `108e72f`, live site serving.
+  Next session starts from Pending (Vi3W GLB exports first).
 
 ## Pending
 
