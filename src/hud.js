@@ -107,12 +107,13 @@ export class Hud {
     this._show({ title: 'Umbra', sub: 'the light gathers…' });
   }
 
-  complete({ name, time, turns, par, best = null, isBest = false }) {
+  complete({ name, time, turns, par, deaths = 0, best = null, isBest = false }) {
     const bt = `${fmtTime(time)} / par ${fmtTime(par.time)}`;
     const okT = time <= par.time;
     const bt2 = `${turns} / par ${par.turns}`;
     const okU = turns <= par.turns;
     let stats = `TIME  ${bt}${okT ? '  ✓' : ''}\nTURN  ${bt2}${okU ? '  ✓' : ''}`;
+    if (deaths > 0) stats += `\nFALL  ${deaths}`;
     if (isBest) {
       stats += '\n\nNEW BEST';
     } else if (best) {
@@ -127,11 +128,11 @@ export class Hud {
     });
   }
 
-  ending({ line, time, turns }) {
+  ending({ line, time, turns, deaths = 0 }) {
     this._show({
       title: 'Umbra',
       sub: line,
-      stats: `TOTAL TIME  ${fmtTime(time)}\nTOTAL TURNS ${turns}`,
+      stats: `TOTAL TIME  ${fmtTime(time)}\nTOTAL TURNS ${turns}\nTOTAL FALLS ${deaths}`,
       key: 'SPACE  →  begin again',
     });
   }

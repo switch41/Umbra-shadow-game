@@ -61,7 +61,8 @@ let turns = 0;
 let timer = 0;
 let winT = 0;
 let deathT = 0;
-let totals = { time: 0, turns: 0 };
+let deaths = 0;
+let totals = { time: 0, turns: 0, deaths: 0 };
 let poseDirty = false;
 let lastMask = -10;
 let solidCount = 0;
@@ -212,6 +213,7 @@ async function loadLevel(index) {
   timer = 0;
   winT = 0;
   deathT = 0;
+  deaths = 0;
   stepT = 0;
   flashA = 0;
   shake = 0;
@@ -228,6 +230,7 @@ function die(cause) {
   if (state !== 'play') return;
   state = 'dying';
   deathT = 0;
+  deaths++;
   shake = 1;
   if (cause === 'crush') {
     sfx.crush();
@@ -257,11 +260,13 @@ function win() {
   }
   const prevBest = loadBest(level.id);
   const isBest = saveBest(level.id, timer, turns);
+  totals.deaths += deaths;
   hud.complete({
     name: level.name,
     time: timer,
     turns,
     par: level.par,
+    deaths,
     best: isBest ? null : prevBest,
     isBest,
   });
@@ -274,7 +279,7 @@ function advance() {
   } else {
     state = 'ending';
     if (botOn) console.log(`[umbra] AUTO-DONE ${bot.passed}/${LEVELS.length - startIndex}`);
-    hud.ending({ line: ENDING_LINE, time: totals.time, turns: totals.turns });
+    hud.ending({ line: ENDING_LINE, time: totals.time, turns: totals.turns, deaths: totals.deaths });
     if (sfx.ctx && !sfx.muted && !sfx.padNodes) sfx.startPad();
   }
 }
@@ -392,7 +397,7 @@ function handleKeys() {
     if (state === 'win') {
       advance();
     } else if (state === 'ending') {
-      totals = { time: 0, turns: 0 };
+      totals = { time: 0, turns: 0, deaths: 0 };
       sfx.ui();
       loadLevel(startIndex);
     }
