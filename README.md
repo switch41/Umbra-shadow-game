@@ -6,6 +6,14 @@ darkness it casts. Five hand-calibrated levels, no combat — the puzzle is the 
 Built with three.js + Vite. The playable world is a 320×180 pixel canvas; the model
 lives in a small WebGL inset that you spin to change the shadow.
 
+> Built as part of the interview process for **Vi3W** — a 3D model generation tool
+> (https://app.vi3w.in). The game's model pipeline is designed around it: each level
+> loads its model as a GLB from `public/models/<name>.glb`, ready for exports
+> generated through Vi3W. Until a GLB is present, a hand-built procedural stand-in
+> of the same subject (teapot, chair, bridge, lantern, windmill) is used so the
+> game is fully playable either way. Silhouette rendering, collision, and the BFS
+> solver work identically on both sources.
+
 ## Play
 
 **Live: https://umbra.kushalparihar013.workers.dev**
