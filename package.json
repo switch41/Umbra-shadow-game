@@ -1,0 +1,21 @@
+{
+  "name": "umbra",
+  "private": true,
+  "version": "1.0.0",
+  "description": "UMBRA — a shadow platformer. Rotate the model, reshape the shadow, walk on darkness.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "node scripts/check-physics.mjs && node scripts/check-levels.mjs",
+    "check:levels": "node scripts/check-levels.mjs",
+    "check:physics": "node scripts/check-physics.mjs"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  }
+}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UMBRA — a shadow platformer</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%; height: 100%;
+      background: #0b0906;
+      overflow: hidden;
+      font-family: Georgia, 'Times New Roman', serif;
+    }
+    #wrap {
+      position: fixed; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #stage {
+      position: relative;
+      box-shadow: 0 30px 90px rgba(0,0,0,.8), 0 0 0 1px rgba(255,220,170,.08);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    #game {
+      display: block;
+      width: 100%; height: 100%;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+    #inset {
+      position: absolute;
+      right: 10px; bottom: 10px;
+      width: 20%;
+      aspect-ratio: 4 / 3;
+      border-radius: 3px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,220,170,.22);
+      background: radial-gradient(120% 120% at 30% 20%, #3a3226 0%, #17130e 70%, #100d09 100%);
+      pointer-events: none;
+    }
+    #hintbar {
+      position: absolute;
+      left: 10px; bottom: 8px;
+      color: rgba(255,225,180,.42);
+      font-size: 11px;
+      letter-spacing: .08em;
+      pointer-events: none;
+      text-shadow: 0 1px 2px rgba(0,0,0,.6);
+      user-select: none;
+    }
+    #hud {
+      position: absolute;
+      left: 12px; top: 10px;
+      pointer-events: none;
+      user-select: none;
+      text-shadow: 0 1px 3px rgba(0,0,0,.75);
+    }
+    #hud-level {
+      font-size: 13px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,235,205,.92);
+    }
+    #hud-stats {
+      margin-top: 3px;
+      font-size: 11px;
+      letter-spacing: .12em;
+      color: rgba(255,220,175,.5);
+      font-variant-numeric: tabular-nums;
+    }
+    #hint {
+      position: absolute;
+      left: 12px; top: 46px;
+      font-size: 11.5px;
+      font-style: italic;
+      line-height: 1.5;
+      letter-spacing: .06em;
+      color: rgba(255,214,155,.9);
+      text-shadow: 0 1px 3px rgba(0,0,0,.8);
+      pointer-events: none;
+      user-select: none;
+      opacity: 0;
+      transition: opacity .35s ease;
+      white-space: pre-line;
+    }
+    #hint.on { opacity: 1; }
+    #debug {
+      position: absolute;
+      right: 10px; top: 8px;
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 10px;
+      line-height: 1.45;
+      text-align: right;
+      color: rgba(140,255,190,.85);
+      text-shadow: 0 1px 2px rgba(0,0,0,.8);
+      pointer-events: none;
+      user-select: none;
+      white-space: pre;
+    }
+    #overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: rgba(5,4,3,.74);
+      opacity: 1;
+      transition: opacity .4s ease;
+      pointer-events: none;
+      user-select: none;
+    }
+    #overlay.fade { opacity: 0; }
+    #overlay.hidden { display: none; }
+    #ov-title {
+      font-size: 30px;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: #ffe9c6;
+      text-shadow: 0 2px 14px rgba(255,190,110,.35);
+    }
+    #ov-sub {
+      margin-top: 12px;
+      max-width: 66%;
+      font-size: 13.5px;
+      font-style: italic;
+      line-height: 1.6;
+      color: rgba(255,228,196,.62);
+    }
+    #ov-stats {
+      margin-top: 16px;
+      font-size: 12px;
+      letter-spacing: .16em;
+      color: rgba(255,222,178,.78);
+      font-variant-numeric: tabular-nums;
+      white-space: pre;
+    }
+    #ov-key {
+      margin-top: 26px;
+      font-size: 10px;
+      letter-spacing: .34em;
+      color: rgba(255,228,196,.45);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    #ov-key.hidden { display: none; }
+    @keyframes pulse { 0%,100% { opacity: .35; } 50% { opacity: 1; } }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <div id="stage">
+      <canvas id="game"></canvas>
+      <canvas id="inset"></canvas>
+      <div id="hud">
+        <div id="hud-level">UMBRA</div>
+        <div id="hud-stats">0:00 · 0</div>
+      </div>
+      <div id="hint"></div>
+      <div id="debug"></div>
+      <div id="overlay">
+        <div id="ov-title">UMBRA</div>
+        <div id="ov-sub"></div>
+        <div id="ov-stats"></div>
+        <div id="ov-key" class="hidden">SPACE</div>
+      </div>
+      <div id="hintbar"></div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
