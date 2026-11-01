@@ -3,3 +3,7 @@ dist/
 _*.log
 _*.png
 _shots/
+
+.vercel
+.env*
+.wrangler/
