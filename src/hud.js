@@ -35,6 +35,8 @@ export class Hud {
     else if (level.axes === 'auto') rot = 'the model turns itself · ↑ ↓ tilt';
     else rot = '← → rotate · ↑ ↓ tilt';
     this.hintbarEl.textContent = `${rot} · ${base}`;
+    const touch = document.getElementById('touch');
+    if (touch) touch.dataset.axes = level.axes;
   }
 
   setTime(sec) {

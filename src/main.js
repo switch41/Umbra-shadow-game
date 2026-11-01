@@ -26,6 +26,7 @@ const hud = new Hud();
 const world = new World(gameCanvas);
 const sfx = new Sfx();
 const input = new Input();
+input.bindTouch(document.getElementById('touch'));
 
 const silRenderer = new THREE.WebGLRenderer({
   canvas: document.createElement('canvas'),

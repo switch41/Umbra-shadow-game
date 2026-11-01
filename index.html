@@ -146,6 +146,47 @@
     }
     #ov-key.hidden { display: none; }
     @keyframes pulse { 0%,100% { opacity: .35; } 50% { opacity: 1; } }
+    #touch {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 20;
+      display: none;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+      gap: 8px;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    @media (pointer: coarse) {
+      #touch { display: flex; }
+      #hintbar { display: none; }
+    }
+    .tgroup { display: flex; gap: 8px; align-items: flex-end; }
+    #touch button {
+      pointer-events: auto;
+      touch-action: none;
+      -webkit-tap-highlight-color: transparent;
+      width: 52px; height: 52px;
+      border: 1px solid rgba(255,220,170,.3);
+      border-radius: 10px;
+      background: rgba(20,16,10,.55);
+      color: rgba(255,230,190,.85);
+      font: 18px/1 Georgia, serif;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #touch button.held {
+      background: rgba(255,210,140,.22);
+      border-color: rgba(255,220,170,.6);
+    }
+    #touch button.jump {
+      width: 76px; height: 58px;
+      font-size: 11px;
+      letter-spacing: .18em;
+    }
+    #touch[data-axes="yaw"] .tpitch { display: none; }
+    #touch[data-axes="auto"] .tyaw { display: none; }
   </style>
 </head>
 <body>
@@ -166,6 +207,23 @@
         <div id="ov-key" class="hidden">SPACE</div>
       </div>
       <div id="hintbar"></div>
+    </div>
+  </div>
+  <div id="touch" data-axes="both">
+    <div class="tgroup">
+      <button type="button" class="tyaw" data-key="ArrowLeft" aria-label="rotate left">↺</button>
+      <button type="button" class="tyaw" data-key="ArrowRight" aria-label="rotate right">↻</button>
+    </div>
+    <div class="tgroup">
+      <button type="button" class="tpitch" data-key="ArrowUp" aria-label="tilt up">▲</button>
+      <button type="button" class="tpitch" data-key="ArrowDown" aria-label="tilt down">▼</button>
+    </div>
+    <div class="tgroup">
+      <button type="button" data-key="KeyA" aria-label="walk left">◀</button>
+      <button type="button" data-key="KeyD" aria-label="walk right">▶</button>
+    </div>
+    <div class="tgroup">
+      <button type="button" class="jump" data-key="Space">JUMP</button>
     </div>
   </div>
   <script type="module" src="/src/main.js"></script>

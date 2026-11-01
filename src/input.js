@@ -28,6 +28,45 @@ export class Input {
   }
   endFrame() { this.pressed.clear(); }
 
+  press(code) {
+    if (this.keys.has(code)) return;
+    this.keys.add(code);
+    this.pressed.add(code);
+  }
+  release(code) {
+    this.keys.delete(code);
+  }
+
+  bindTouch(root) {
+    if (!root) return;
+    const active = new Map();
+    const down = (e) => {
+      const btn = e.target.closest?.('[data-key]');
+      if (!btn) return;
+      e.preventDefault();
+      try {
+        btn.setPointerCapture(e.pointerId);
+      } catch {
+        /* capture unsupported — window pointerup still fires */
+      }
+      active.set(e.pointerId, { code: btn.dataset.key, btn });
+      btn.classList.add('held');
+      this.press(btn.dataset.key);
+    };
+    const up = (e) => {
+      const a = active.get(e.pointerId);
+      if (!a) return;
+      active.delete(e.pointerId);
+      a.btn.classList.remove('held');
+      this.release(a.code);
+    };
+    root.addEventListener('pointerdown', down);
+    root.addEventListener('pointerup', up);
+    root.addEventListener('pointercancel', up);
+    root.addEventListener('lostpointercapture', up);
+    root.addEventListener('contextmenu', (e) => e.preventDefault());
+  }
+
   get move() {
     return (this.held('KeyD') ? 1 : 0) - (this.held('KeyA') ? 1 : 0);
   }
