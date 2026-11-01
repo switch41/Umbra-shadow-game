@@ -11,7 +11,8 @@
     "check": "node scripts/check-physics.mjs && node scripts/check-levels.mjs && node scripts/check-store.mjs",
     "check:levels": "node scripts/check-levels.mjs",
     "check:physics": "node scripts/check-physics.mjs",
-    "check:store": "node scripts/check-store.mjs"
+    "check:store": "node scripts/check-store.mjs",
+    "deploy": "vite build && wrangler deploy"
   },
   "dependencies": {
     "three": "^0.180.0"
