@@ -144,9 +144,37 @@ Append-only. Newest entries at the bottom of each section.
 - `npm run deploy` = `vite build && wrangler deploy`; `.wrangler/` ignored.
 - README links the live URL + deploy command; everything pushed to GitHub.
 
+### 2026-11-01 (session 8 — auto-deploy attempt, Vi3W context)
+All times IST (commit timestamps from git log).
+- **17:40–18:00** session 6 features committed: README `1ca0f58`, best times
+  `858aeb5`, touch controls `f12935b`, falls `fd0bab4`, CI `a7254f6`,
+  favicon `e35ef3a`, worklog sync `6318242`.
+- **18:18** Cloudflare Workers deploy: `wrangler.jsonc` + `npm run deploy`
+  script (`8a7a794`, `1d0c1d0`); live URL verified 5/5 via `?auto=1`.
+- **20:42** README + WORKLOG document the live URL (`2318816`).
+- **21:20** Push-to-deploy attempt: extended `ci.yml` with a `deploy` job
+  (`needs: check`, push-to-master only, `npm run deploy` +
+  `CLOUDFLARE_API_TOKEN` secret) — `739f24d`. Actions run
+  #41323251688: `check` green, `deploy` red (secret absent, as predicted).
+- **21:25** User decision: **skip the token setup entirely** — keep the red
+  deploy job (expected noise, not a failure to debug); updates go live via
+  manual `npm run deploy` (wrangler OAuth-authed locally). Revisit any
+  time: either add the secret or self-skip the job.
+- **21:51** Interview context surfaced: UMBRA is the **Vi3W**
+  (app.vi3w.in) interview assignment. README updated honestly (`d6052c9`)
+  — GLB pipeline `public/models/<name>.glb` is ready for Vi3W exports;
+  procedural stand-ins remain the playable fallback; no exports in repo
+  yet.
+
 ## Pending
 
+- [ ] **Vi3W GLB exports** (assignment requirement): generate the 5 subjects
+      (teapot, chair, bridge, lantern, windmill) on https://app.vi3w.in,
+      export GLBs into `public/models/`, tune `normalize`/`modelPos` per
+      level, re-run `npm run check` + `?auto=1` 5/5.
 - [ ] Runtime playtest in a real browser (`npm run dev` → http://localhost:5173):
       feel of `JUMP=180` / corrected walk speed, all 5 levels beatable by hand,
       ending screen, audio, keyboard + touch controls, best-time display.
-- [ ] Optional later: `public/models/*.glb` hand-made models.
+- [ ] Optional: add `CLOUDFLARE_API_TOKEN` secret to enable push-to-deploy
+      (currently manual `npm run deploy`; the red deploy job in Actions is
+      the known skipped step, not a regression).
