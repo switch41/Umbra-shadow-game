@@ -8,6 +8,10 @@ lives in a small WebGL inset that you spin to change the shadow.
 
 ## Play
 
+**Live: https://umbra.kushalparihar013.workers.dev**
+
+Or run locally:
+
 ```sh
 npm install
 npm run dev
@@ -45,6 +49,7 @@ npm run check:physics  # walk speed, jump apex/airtime vs spec
 npm run check:levels   # every level has a spawn→exit path
 npm run check:store    # localStorage best-time roundtrip/tiebreak/corruption
 npm run build          # production build → dist/
+npm run deploy         # rebuild + push live to Cloudflare Workers
 ```
 
 ## How it works

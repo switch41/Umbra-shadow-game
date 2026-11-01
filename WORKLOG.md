@@ -132,6 +132,18 @@ Append-only. Newest entries at the bottom of each section.
   `?auto=1` still reaches AUTO-DONE 5/5 (occasional headless restarts on
   spawn-path timing are pre-existing and self-heal via the restart fallback).
 
+### 2026-11-01 (session 7 — hosting)
+- Vercel first (project `switch41/umbra`, SSO protection disabled so the
+  site is public) — but user chose Cloudflare Workers as the host instead.
+- **Cloudflare Workers static assets** (free, `*.workers.dev` like the
+  user's existing sites): installed wrangler 4.x, OAuth login,
+  `wrangler.jsonc` (`name: umbra`, assets from `dist/`, no worker script).
+- **Live: https://umbra.kushalparihar013.workers.dev** — verified by
+  fetching the page (game shell + touch controls present) and by running
+  `?auto=1` against production: AUTO-DONE 5/5.
+- `npm run deploy` = `vite build && wrangler deploy`; `.wrangler/` ignored.
+- README links the live URL + deploy command; everything pushed to GitHub.
+
 ## Pending
 
 - [ ] Runtime playtest in a real browser (`npm run dev` → http://localhost:5173):
