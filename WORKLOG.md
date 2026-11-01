@@ -107,10 +107,34 @@ Append-only. Newest entries at the bottom of each section.
 - **First git commit** (single initial import of the verified working game —
   no pre-fix baseline reconstructed; history lives in this log).
 
+### 2026-11-01 (session 6 — public repo + features)
+- Pushed to https://github.com/switch41/Game (identity `switch41`).
+  Declined a request to fabricate ~200 padded commits; history is real work only.
+- `README.md`: play instructions, controls table, dev URL params, check commands,
+  architecture walkthrough, project layout.
+- **Best times** (`src/store.js`): per-level best time/turns in localStorage
+  (`umbra.best.v1`); faster time wins, turns break ties; corrupt-JSON and
+  storage-throw fallbacks. Complete overlay shows `NEW BEST` or previous best;
+  in-play stats line shows `best m:ss`. `scripts/check-store.mjs` — 18 node
+  assertions, wired into `npm run check`.
+- **Touch controls**: `Input.press/release` + `bindTouch()` map on-screen buttons
+  onto the same key codes as the keyboard (shared move/jump/rotAxes logic).
+  Fixed bottom bar shown only under `pointer:coarse`; tilt hidden on yaw-only
+  levels, rotate hidden on auto-spin levels (`data-axes` set in `Hud.setLevel`);
+  hintbar hidden there. DOM verified in headless dump.
+- **Fall tracking**: per-level death counter (reset on load, `++` in `die()`);
+  complete overlay `FALL n` when >0; ending screen `TOTAL FALLS`.
+- **CI** (`.github/workflows/ci.yml`): push/PR → node 22, `npm ci`,
+  `npm run check` + `npm run build`.
+- **Favicon/meta**: `public/favicon.svg` (lamp + cast-shadow mark),
+  theme-color, description, `viewport-fit=cover` for safe-area touch padding.
+- Verification each step: `npm run check` green, `vite build` green,
+  `?auto=1` still reaches AUTO-DONE 5/5 (occasional headless restarts on
+  spawn-path timing are pre-existing and self-heal via the restart fallback).
+
 ## Pending
 
 - [ ] Runtime playtest in a real browser (`npm run dev` → http://localhost:5173):
       feel of `JUMP=180` / corrected walk speed, all 5 levels beatable by hand,
-      ending screen, audio, keyboard controls.
-- [ ] Optional later: `public/models/*.glb` hand-made models, localStorage best times,
-      on-screen touch controls.
+      ending screen, audio, keyboard + touch controls, best-time display.
+- [ ] Optional later: `public/models/*.glb` hand-made models.

@@ -40,9 +40,10 @@ URL params for development/testing:
 ## Checks
 
 ```sh
-npm run check          # physics probe + level topology
+npm run check          # physics probe + level topology + best-time store
 npm run check:physics  # walk speed, jump apex/airtime vs spec
 npm run check:levels   # every level has a spawn→exit path
+npm run check:store    # localStorage best-time roundtrip/tiebreak/corruption
 npm run build          # production build → dist/
 ```
 
@@ -73,11 +74,13 @@ src/
   world.js        2D renderer (sky, shadow mask, player, hazards)
   preview.js      3D inset renderer
   hud.js          DOM HUD / overlays
-  input.js        keyboard
+  input.js        keyboard + on-screen touch controls
+  store.js        localStorage best times
   audio.js        WebAudio blips + pad
 scripts/
   check-physics.mjs   physics spec probe
   check-levels.mjs    static topology check
+  check-store.mjs     best-time store assertions
 ```
 
 ## License
